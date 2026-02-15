@@ -12,11 +12,14 @@ import {
   CheckCircle2
 } from 'lucide-react';
 
+import { useN8nStatus } from '@/hooks/useN8nStatus';
+
 export default function Dashboard() {
   const [videoUrl, setVideoUrl] = useState<string>("");
   const [loading, setLoading] = useState<string | null>(null);
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'info' } | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const status = useN8nStatus();
 
   // Initialize video URL with cache busting on mount
   useEffect(() => {
@@ -93,9 +96,17 @@ export default function Dashboard() {
           </h1>
           <p className="text-white/60 mt-2 text-lg">Manage your content generation pipeline</p>
         </div>
-        <div className="flex items-center gap-3 px-4 py-2 glass-panel rounded-full text-sm font-medium text-white/80">
-          <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-          System Operational
+        <div className="flex items-center gap-3">
+          {status && (
+            <div className="flex items-center gap-3 px-4 py-2 glass-panel rounded-full text-sm font-medium text-white/80">
+              <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+              Status: {status}
+            </div>
+          )}
+          <div className="flex items-center gap-3 px-4 py-2 glass-panel rounded-full text-sm font-medium text-white/80">
+            <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+            System Operational
+          </div>
         </div>
       </header>
 
